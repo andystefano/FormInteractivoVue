@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <title></title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+	
+	</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">VueJS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav" id="MenuAPP">
+      <li class="nav-item active" v-for="Item in ItemsMenu">
+        <a class="nav-link" v-bind:href="Item.URL">{{Item.Nombre}} </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+ 
+ 
+<div class="container">
+
+ 
+ 
+<div id="AppFrutas"> 
+   <div class="form-group" >
+    <label for="fruta">Fruta</label>
+    <input type="text" class="form-control" id="nombre_fruta" name="nombre_fruta" v-model="nombre_fruta" aria-describedby="frutaHelp" placeholder="Ingrese Nombre Ftuta">
+    <small id="frutaHelp" class="form-text text-muted">Ingrese nombre fruta.</small>
+  </div>
+  <div class="form-group">
+    <label for="cantidad">Cantidad</label>
+    <input type="number" class="form-control" id="cantidad" name="cantidad" v-model.number="cantidad" placeholder="" @keyup.enter="AgregarFruta">
+  </div>
+
+  <button type="submit" class="btn btn-primary" @click="AgregarFruta">Agregar</button>
+  
+	 <ul>
+	 <li v-for="fruta in frutas">{{fruta.nombre}} <input type="number" v-model.number="fruta.cantidad" /> <span v-if="fruta.cantidad===0">Sin Stock</span>
+	 <button @click="fruta.cantidad++">+</button>  
+	 </li> 
+
+	 </ul>
+ 
+ <h1>{{SumarFrutas}}</h1>
+ </div>
+ 
+ 
+ </div>
+ 
+
+<script>
+
+const MenuAPP = new Vue({
+el:'#MenuAPP',
+data: {ItemsMenu : [
+{Nombre:'Home',URL:'/'},
+{Nombre:'Quienes Somos',URL:'/QuienesSomos.html'},
+{Nombre:'Productos',URL:'/Productos.html'},
+{Nombre:'Contacto',URL:'/contacto.html'},
+]}
+});
+
+ 
+
+const AppFrutas = new Vue({
+el:"#AppFrutas",
+data:{frutas:[
+{nombre:"Pera",cantidad:9},
+{nombre:"Manzana",cantidad:2},
+{nombre:"Uva",cantidad:2}
+],
+total:0},
+methods:{
+AgregarFruta(){
+ console.log('Futaa');
+ this.frutas.push({nombre:this.nombre_fruta,cantidad:this.cantidad});
+}
+},computed: {
+
+	SumarFrutas(){
+	this.total=0;
+		for(fruta of this.frutas){
+			this.total = this.total + fruta.cantidad;
+		}
+		
+		return this.total;
+	}
+}}); 
+ 
+ 
+
+</script>
+</body>
+
+</html>
+
